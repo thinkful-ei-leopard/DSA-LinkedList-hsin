@@ -148,15 +148,40 @@ function display(list){
 
 function size(list){
   let node = list.head;
-  let sum=1;
-  if(node === null ){
-    sum=0;
+  let sum=0;
+  if(!node ){
+    return sum;
   }
   while(node.next !== null){
-    node=node.next;
     sum ++;
+    node=node.next;
+    
   }
   return sum;
+}
+
+function isEmpty(list){
+  if(list.head === null){
+    console.log('List is empty');
+  }
+  console.log('List is not empty');
+}
+
+function findPrevious(list, item){ 
+  let node = list.head;
+    
+  while(node.next.value !== item && node.next.value!==null){
+    node = node.next;
+  }
+  return node;
+}
+
+function findLast(list, item){
+  let currNode = list.head;
+  while(currNode.next.value !== null && currNode.next.value !==item){
+    currNode=currNode.next;
+  }
+  return currNode.next;
 }
 
 
@@ -170,14 +195,140 @@ function main(){
   SLL.insertFirst('Starbuck');
   SLL.insertFirst('Tauhida');
   // SLL.remove('squirrel');  ---Item not found
-  SLL.insertBefore('Athena', 'Boomer');
-  SLL.insertAfter('Hotdog', 'Helo');
-  SLL.insertAt('Kat', 3);
-  SLL.remove('Tauhida');
+  //SLL.insertBefore('Athena', 'Boomer');
+  //SLL.insertAfter('Hotdog', 'Helo');
+  //SLL.insertAt('Kat', 3);
+  //SLL.remove('Tauhida');
   display(SLL);
-  console.log(size(SLL));
+  isEmpty(SLL);
+  size(SLL);
+  //console.log(findPrevious(SLL, 'Helo'));
+  console.log(findLast(SLL, 'Helo'));
   return SLL;
 }
   
-console.log(main());
+//console.log(main());
+
+//drill 4
+
+/*function WhatDoesThisProgramDo(lst) {
+  let current = lst.head;
+  while (current !== null) {
+      let newNode = current;
+      while (newNode.next !== null) {
+          if (newNode.next.value === current.value) {
+              newNode.next = newNode.next.next;
+          }
+          else {
+              newNode = newNode.next;
+          }
+      }
+      current = current.next;
+  }
+}
+
+Answer: This program removes duplicates from a linked list. It will remove the 2nd and 
+//later occurances of the linked list - will not presenve the order of the list
+ */ 
+
+//drill 5
+
+function reverse(list){
+  let node =list.head;
+  let setNull = null;
   
+  while(node !== null){
+    //console.log(node)
+    let saveNode =node.next;
+    // console.log(saveNode);
+    node.next = setNull;
+    //console.log(node.next)
+    setNull = node;
+    //console.log(setNull);
+    node = saveNode;
+    //console.log(node)
+  }
+  list.head = setNull;
+  return list;
+
+} 
+  
+
+
+function main2(){
+  let trial = new LinkedList();
+  trial.insertFirst('One');
+  trial.insertFirst('Two');
+  trial.insertFirst('Three');
+  trial.insertFirst('Four');
+  trial.insertFirst('Five');
+  trial.insertFirst('Six');
+  trial.insertFirst('Seven');
+  trial.insertFirst('eight');
+  trial.insertFirst('nine');
+  //console.log(reverse(trial));
+  //console.log(find3rd(trial));
+  console.log(findMiddle(trial));
+  return trial;
+}
+
+//console.log(main2())
+
+//drill 6
+function find3rd(list){
+  let end = list.head;
+  
+  while( end.next.next.next !== null){
+    
+    end = end.next;
+  }
+  return end.value;
+}
+
+//drill 7 
+function findMiddle(list){
+  let end = this.head;
+  let middle =this.head;
+
+  while(end.next.next !==null && middle.next !==null){
+    end = end.next.next;
+    middle = middle.next;
+  }
+  return middle.value;
+}
+//drill 8
+
+function CycleList(){
+  let newList = new LinkedList;
+  //newList.insertFirst('5');
+  //newList.insertFirst('4');
+  newList.insertFirst('1');
+  newList.insertFirst('2');
+  newList.insertFirst('1');
+  newList.insertFirst('2');
+  newList.insertFirst('1');
+  newList.insertFirst('2');
+  newList.insertFirst('1');
+  newList.insertFirst('2');
+  console.log(ifCycle(newList));
+  return newList;
+}
+
+console.log(CycleList());
+
+function ifCycle(list){
+  let first = list.head;
+  let sec = list.head;
+  while(first.next!== null && first !== null && sec !== null){
+    sec = sec.next;
+    first = first.next.next;
+    if(first === sec){
+      return 'Found cycle';
+    }
+  }
+  return 'no cycle'
+  
+}
+
+
+
